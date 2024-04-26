@@ -41,8 +41,12 @@ aliases: [
     "urls": {
       "streaming": "wss://mastodon.social"
     },
+    "vapid": {
+      "public_key": "BCkMmVdKDnKYwzVCDC99Iuc9GvId-x7-kKtuHnLgfF98ENiZp_aj-UNthbCdI70DqN1zUVis-x0Wrot2sBagkMc="
+    },
     "accounts": {
-      "max_featured_tags": 10
+      "max_featured_tags": 10,
+      "max_pinned_statuses": 4
     },
     "statuses": {
       "max_characters": 500,
@@ -283,12 +287,18 @@ aliases: [
 **Version history:**\
 4.0.0 - added
 
-##### `configuration[urls][streaming_api]` {#streaming_api}
+##### `configuration[urls][streaming]` {#streaming}
 
 **Description:** The Websockets URL for connecting to the streaming API.\
 **Type:** String (URL)\
 **Version history:**\
 4.0.0 - added
+
+### `configuration[vapid][public_key]` {#vapid_public_key}
+**Description:** The instances VAPID public key, used for push notifications, the same as [WebPushSubscription#server_key]({{< relref "entities/WebPushSubscription#server_key" >}}).\
+**Type:** String\
+**Version history:**\
+4.3.0 - added
 
 #### `configuration[accounts]` {#accounts}
 
@@ -303,6 +313,13 @@ aliases: [
 **Type:** Integer\
 **Version history:**\
 4.0.0 - added
+
+##### `configuration[accounts][max_pinned_statuses]` {#max_pinned_statuses}
+
+**Description:** The maximum number of pinned statuses for each account.\
+**Type:** Integer\
+**Version history:**\
+4.3.0 - added
 
 #### `configuration[statuses]` {#statuses}
 
@@ -475,7 +492,7 @@ aliases: [
 #### `contact[account]` {#contact-account}
 
 **Description:** An account that can be contacted natively over the network regarding inquiries or issues.\
-**Type:** [Account]({{< relref "entities/Account" >}})\
+**Type:** {{<nullable>}} [Account]({{< relref "entities/Account" >}}) or null\
 **Version history:**\
 4.0.0 - added
 

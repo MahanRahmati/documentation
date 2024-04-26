@@ -3,7 +3,7 @@ title: admin/accounts API methods
 description: Perform moderation actions with accounts.
 menu:
   docs:
-    name: admin/accounts
+    name: accounts
     parent: methods-admin
     identifier: methods-admin-accounts
 aliases: [
@@ -686,7 +686,7 @@ POST /api/v1/admin/accounts/:id/action HTTP/1.1
 
 Perform an action against an account and log this action in the moderation history. Also resolves any open reports against this account.
 
-**Returns:** empty object\
+**Returns:** Empty\
 **OAuth:** User token + `admin:write:accounts`\
 **Permissions:** Manage Users, Manage Reports\
 **Version history:**\

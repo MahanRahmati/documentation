@@ -61,8 +61,12 @@ Obtain general information about the server.
     "urls": {
       "streaming": "wss://mastodon.social"
     },
+    "vapid": {
+      "public_key": "BCkMmVdKDnKYwzVCDC99Iuc9GvId-x7-kKtuHnLgfF98ENiZp_aj-UNthbCdI70DqN1zUVis-x0Wrot2sBagkMc="
+    },
     "accounts": {
-      "max_featured_tags": 10
+      "max_featured_tags": 10,
+      "max_pinned_statuses": 4
     },
     "statuses": {
       "max_characters": 500,
@@ -483,6 +487,36 @@ Obtain an extended description of this server
 {
   "updated_at":"2022-11-03T04:09:07Z",
   "content":"<p>For inquiries not related specifically to the operation of this server, such as press inquiries, please contact <a href=\"mailto:press@joinmastodon.org\">press@joinmastodon.org</a>.</p>\n\n<h2>Funding</h2>\n\n<p>This server is crowdfunded by <a href=\"https://patreon.com/mastodon\">Patreon donations</a>. For a list of sponsors, see <a href=\"https://joinmastodon.org/sponsors\">joinmastodon.org</a>.</p>\n\n<h2>Reporting and moderation</h2>\n\n<p>When reporting accounts, please make sure to include at least a few posts that show rule-breaking behaviour, when applicable. If there is any additional context that might help make a decision, please also include it in the comment. This is especially important when the content is in a language nobody on the moderation team speaks.</p>\n\n<p>We usually handle reports within 24 hours. Please mind that you are not notified when a report you have made has led to a punitive action, and that not all punitive actions are externally visible. For first time offenses, we may opt to delete offending content, escalating to harsher measures on repeat offenses.</p>\n\n<h2>Impressum</h2>\n\n<p>Mastodon gGmbH<br>\nMühlenstraße 8a<br>\n14167 Berlin<br>\nGermany</p>\n\n<p>E-Mail-Adresse: hello@joinmastodon.org</p>\n\n<p>Vertretungsberechtigt: Eugen Rochko (Geschäftsführer)</p>\n\n<p>Umsatzsteuer Identifikationsnummer (USt-ID): DE344258260</p>\n\n<p>Handelsregister<br>\nGeführt bei: Amtsgericht Charlottenburg<br>\nNummer: HRB 230086 B</p>\n"
+}
+```
+
+---
+
+## View translation languages {#translation_languages}
+
+```http
+GET /api/v1/instance/translation_languages HTTP/1.1
+```
+
+Translation language pairs supported by the translation engine used by the server.
+
+**Returns:** Object with source language codes as keys and arrays of target language codes as values.\
+**OAuth:** Public\
+**Version history:**\
+4.2.0 - added
+
+#### Response
+##### 200: OK
+
+All source and target language pairs supported by the server.
+
+In the following sample response showing support for translating a status written in English (`en`) into German (`de`) or Spanish (`es`). The source language code `und` indicates that the server supports auto-detection the language of statuses with an empty `language` attribute and translating these into either British English (`en-GB`), German or Spanish.
+
+```json
+{
+  "en": ["de", "es"],
+  // [...]
+  "und": ["en-GB", "de", "es"]
 }
 ```
 
