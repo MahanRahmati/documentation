@@ -391,6 +391,66 @@ Invalid or missing Authorization header.
 
 ---
 
+## Get the number of unread notifications {#unread-count}
+
+```http
+GET /api/v1/notifications/unread_count HTTP/1.1
+```
+
+Get the (capped) number of unread notifications for the current user.
+A notification is considered unread if it is more recent than the [notifications read marker]({{< relref "methods/markers" >}}).
+Because the count is dependant on the parameters, it is computed every time and is thus a relatively slow operation (although faster than getting the full corresponding notifications), therefore the number of returned notifications is capped.
+
+**Returns:** Hash with a single key of `count`\
+**OAuth:** User token + `read:notifications`\
+**Version history**:\
+4.3.0 - added
+
+#### Request
+
+##### Headers
+
+Authorization
+: {{<required>}} Provide this header with `Bearer <user token>` to gain authorized access to this API method.
+
+##### Query parameters
+
+limit
+: Integer. Maximum number of results to return. Defaults to 100 notifications. Max 1000 notifications.
+
+types[]
+: Array of String. Types of notifications that should count towards unread notifications.
+
+exclude_types[]
+: Array of String. Types of notifications that should not count towards unread notifications.
+
+account_id
+: String. Only count unread notifications received from the specified account.
+
+#### Response
+
+##### 200: OK
+
+The response body contains the capped count of unread notifications.
+
+```json
+{
+  "count": 42,
+}
+```
+
+##### 401: Unauthorized
+
+Invalid or missing Authorization header.
+
+```json
+{
+  "error": "The access token is invalid"
+}
+```
+
+---
+
 ## Get the filtering policy for notifications {#get-policy}
 
 ```http
@@ -540,9 +600,6 @@ min_id
 limit
 : Integer. Maximum number of results to return. Defaults to 40 notification requests. Max 80 notification requests.
 
-dismissed
-: Boolean. Shows only dismissed requests if `true`, and only non-dismissed requests if `false`. Defaults to `false`.
-
 #### Response
 
 ##### 200: OK
@@ -691,6 +748,10 @@ Invalid or missing Authorization header.
 ---
 
 ## Accept a single notification request {#accept-request}
+
+```http
+POST /api/v1/notifications/requests/:id/accept HTTP/1.1
+```
 
 Accept a notification request, which merges the filtered notifications from that user back into the main notification and accepts any future notification from them.
 
